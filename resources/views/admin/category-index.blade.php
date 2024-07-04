@@ -7,11 +7,19 @@
                 <a href="{{ route('category.create') }}" class="btn btn-primary float-right">Create Category</a>
             </div>
             <div class="card-body">
+                @if (session('message'))
+                    <div id="session-alert" class="alert alert-{{ session('message.type') }}">
+                        {{ session('message.content') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 @if ($categories->count() > 0)
                     <table class="table table-bordered">
                         <thead class="table-dark">
                             <tr>
-                                <th>Id</th>
+                                <th>#</th>
                                 <th>Category Name</th>
                                 <th>Action</th>
                             </tr>
@@ -19,7 +27,7 @@
                         <tbody>
                             @foreach ($categories as $category)
                                 <tr>
-                                    <td>{{ $category->id }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $category->category_name }}</td>
                                     <td>
                                         <div class="d-flex justify-content-start">

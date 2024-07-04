@@ -17,11 +17,19 @@
                 <a href="{{ route('slider.create') }}" class="btn btn-primary float-right">Create Slider</a>
             </div>
             <div class="card-body">
+                @if (session('message'))
+                    <div id="session-alert" class="alert alert-{{ session('message.type') }}">
+                        {{ session('message.content') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 @if ($sliders->count() > 0)
                     <table class="table table-bordered">
                         <thead class="table-dark">
                             <tr>
-                                <th>Id</th>
+                                <th>#</th>
                                 <th>Image</th>
                                 <th>Heading</th>
                                 <th>Sub-heading</th>
@@ -32,7 +40,7 @@
                         <tbody>
                             @foreach ($sliders as $slider)
                                 <tr>
-                                    <td>{{ $slider->id }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>
                                         <img src="{{ asset('images/sliders/' . $slider->slider_image) }}"
                                             alt="{{ $slider->slider_heading }}" style="max-width: 70px; max-height: 70px;">

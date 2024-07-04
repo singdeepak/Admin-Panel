@@ -41,7 +41,7 @@
                     <div class="form-group">
                         <label for="service_title">Service Title</label>
                         <input type="text" class="form-control"
-                            id="service_title" placeholder="Enter service title" name="service_title">
+                            id="service_title" placeholder="Enter service title" name="service_title" value={{ old('service_title') }}>
                     </div>
                     <div class="form-group">
                         <label for="service_short_description">Service Short Description</label>

@@ -4,7 +4,7 @@
         <div class="card">
             @if (session('error'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
+                    {{ session('error') }} <!-- Corrected to session('error') -->
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
@@ -28,18 +28,19 @@
                     <div class="form-group">
                         <label for="slider-heading">Slider Heading</label>
                         <input type="text" class="form-control" id="slider-heading" placeholder="Enter slider heading"
-                            name="slider-heading" value="{{ $slider->slider_heading }}">
+                            name="slider-heading" value="{{ old('slider-heading', $slider->slider_heading) }}">
+                        <!-- Use old('field_name', default_value) to repopulate with previous input or default value -->
                     </div>
                     <div class="form-group">
                         <label for="slider-sub-heading">Slider Sub-Heading</label>
                         <input type="text" class="form-control" id="slider-sub-heading"
                             placeholder="Enter slider sub-heading" name="slider-sub-heading"
-                            value="{{ $slider->slider_sub_heading }}">
+                            value="{{ old('slider-sub-heading', $slider->slider_sub_heading) }}">
                     </div>
                     <div class="form-group">
                         <label for="slider-link">Slider Link</label>
                         <input type="text" class="form-control" id="slider-link" placeholder="Enter slider link"
-                            name="slider-link" value="{{ $slider->slider_link }}">
+                            name="slider-link" value="{{ old('slider-link', $slider->slider_link) }}">
                     </div>
                     <div class="form-group">
                         <label for="current-slider-image">Current Slider Image</label><br>

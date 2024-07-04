@@ -7,11 +7,19 @@
                 <a href="{{ route('testimonial.create') }}" class="btn btn-primary float-right">Create Testimonial</a>
             </div>
             <div class="card-body">
+                @if (session('message'))
+                    <div id="session-alert" class="alert alert-{{ session('message.type') }}">
+                        {{ session('message.content') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 @if ($testimonials->count() > 0)
                     <table class="table table-bordered">
                         <thead class="table-dark">
                             <tr>
-                                <th>Id</th>
+                                <th>#</th>
                                 <th>Image</th>
                                 <th>Client Name</th>
                                 <th>Text</th>
@@ -24,7 +32,7 @@
                         <tbody>
                             @foreach ($testimonials as $testimonial)
                                 <tr>
-                                    <tr>{{ $testimonial->id }}</tr>
+                                    <tr>{{ $loop->iteraion }}</tr>
                                     <td>
                                         <img src="{{ asset('images/testimonials/' . $testimonial->client_image) }}"
                                             alt="{{ $testimonial->client_name }}" style="max-width: 70px; max-height: 70px;">

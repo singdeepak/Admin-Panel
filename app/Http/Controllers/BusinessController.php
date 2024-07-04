@@ -40,7 +40,7 @@ class BusinessController extends Controller
 
             $validator = Validator::make($request->all(), $rules);
             if($validator->fails()){
-                return redirect()->back()->withErrors($validator->errors());
+                return redirect()->back()->withErrors($validator)->withInput();
             }
 
             // Handle the file upload
@@ -66,8 +66,8 @@ class BusinessController extends Controller
             $business->instagram = $request->input('instagram');
             $business->logo = $imageName;
             $business->save();
-
-            return redirect()->route('business.index')->with('success', 'Business created successfully.');
+            session()->flash('message', ['type' => 'success', 'content' => 'Business created successfully!']);
+            return redirect()->route('business.index');
         } catch (Exception $e) {
             Log::info($e->getMessage());
             return response()->json([$e->getMessage()], 500);
@@ -101,10 +101,9 @@ class BusinessController extends Controller
 
                 $validator = Validator::make($request->all(), $rules);
                 if ($validator->fails()) {
-                    return redirect()->back()->withErrors($validator->errors());
+                    return redirect()->back()->withErrors($validator)->withInput();
                 }
 
-                // Handle the file upload
                 if ($request->hasFile('logo')) {
                     $image = $request->file('logo');
                     $imageName = time() . '.' . $image->getClientOriginalExtension();
@@ -113,7 +112,6 @@ class BusinessController extends Controller
                     return redirect()->back()->with('error', 'Image file not found.');
                 }
 
-                // Create a new business
                 $business->business_name = $request->input('business_name');
                 $business->about_info = $request->input('about_info');
                 $business->contact = $request->input('contact');
@@ -126,8 +124,8 @@ class BusinessController extends Controller
                 $business->instagram = $request->input('instagram');
                 $business->logo = $imageName;
                 $business->save();
-
-                return redirect()->route('business.index')->with('success', 'business updated successfully.');
+                session()->flash('message', ['type' => 'success', 'content' => 'Business updated successfully!']);
+                return redirect()->route('business.index');
             } catch (Exception $e) {
                 Log::info($e->getMessage());
                 return response()->json([$e->getMessage()], 500);
@@ -141,7 +139,8 @@ class BusinessController extends Controller
     {
         $business = Business::find($id);
         if ($business->delete()) {
-            return redirect()->route('business.index')->with('success', 'Business deleted successfully..!');
+            session()->flash('message', ['type' => 'success', 'content' => 'Business deleted successfully!']);
+            return redirect()->route('business.index');
         } else {
             return redirect()->back()->with('success', 'business can not be deleted..!');
         }

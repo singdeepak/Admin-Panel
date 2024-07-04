@@ -7,11 +7,20 @@
                 <a href="{{ route('service.create') }}" class="btn btn-primary float-right">Create Service</a>
             </div>
             <div class="card-body">
+                @if (session('message'))
+                    <div id="session-alert" class="alert alert-{{ session('message.type') }}">
+                        {{ session('message.content') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
                 @if ($services->count() > 0)
                     <table class="table table-bordered">
                         <thead class="table-dark">
                             <tr>
-                                <th>Id</th>
+                                <th>#</th>
                                 <th>Image</th>
                                 <th>Category</th>
                                 <th>Title</th>
@@ -23,9 +32,10 @@
                         <tbody>
                             @foreach ($services as $service)
                                 <tr>
-                                    <td>{{ $service->id }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>
-                                        <img src="{{ asset('images/services/' . $service->service_image) }}" alt="{{ $service->service_image }}" style="max-width: 70px; max-height: 70px;">
+                                        <img src="{{ asset('images/services/' . $service->service_image) }}"
+                                            alt="{{ $service->service_image }}" style="max-width: 70px; max-height: 70px;">
                                     </td>
                                     <td>{{ $service->category->category_name }}</td>
                                     <td>{{ $service->service_title }}</td>

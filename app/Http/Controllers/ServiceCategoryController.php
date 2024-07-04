@@ -28,15 +28,14 @@ class ServiceCategoryController extends Controller
             ];
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator->errors());
+                return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            // Create a new category
             $category = new ServiceCategory();
             $category->category_name = $request->category;
             $category->save();
-
-            return redirect()->route('category.index')->with('success', 'Category created successfully.');
+            session()->flash('message', ['type' => 'success', 'content' => 'Category created successfully!']);
+            return redirect()->route('category.index');
         } catch (Exception $e) {
             Log::info($e->getMessage());
             return response()->json([$e->getMessage()], 500);
@@ -59,14 +58,13 @@ class ServiceCategoryController extends Controller
                 ];
                 $validator = Validator::make($request->all(), $rules);
                 if($validator->fails()){
-                    return redirect()->back()->withErrors($validator->errors());
+                    return redirect()->back()->withErrors($validator)->withInput();
                 }
 
-                // update a new category
                 $category->category_name = $request->input('category');
                 $category->save();
-
-                return redirect()->route('category.index')->with('success', 'Category updated successfully.');
+                session()->flash('message', ['type' => 'success', 'content' => 'Category updated successfully!']);
+                return redirect()->route('category.index');
             } catch (Exception $e) {
                 Log::info($e->getMessage());
                 return response()->json([$e->getMessage()], 500);
@@ -80,7 +78,8 @@ class ServiceCategoryController extends Controller
     public function deleteCategory($id){
         $category = ServiceCategory::find($id);
         if ($category->delete()) {
-            return redirect()->route('category.index')->with('success', 'Category deleted successfully..!');
+            session()->flash('message', ['type' => 'success', 'content' => 'Category deleted successfully!']);
+            return redirect()->route('category.index');
         } else {
             return redirect()->back()->with('success', 'Category can not be deleted..!');
         }

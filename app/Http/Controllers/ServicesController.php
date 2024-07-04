@@ -36,7 +36,7 @@ class ServicesController extends Controller
 
         $validator = Validator::make($request->all(), $rules);
         if($validator->fails()){
-            return redirect()->back()->withErrors($validator->errors());
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         try {
@@ -52,8 +52,8 @@ class ServicesController extends Controller
             }
             $service->priority = $request->priority;
             $service->save();
-
-            return redirect()->route('service.index')->with('success', 'Service created successfully!');
+            session()->flash('message', ['type' => 'success', 'content' => 'Service created successfully!']);
+            return redirect()->route('service.index');
         } catch (Exception $e) {
             Log::info($e->getMessage());
             return response()->json([$e->getMessage()], 500);
@@ -67,7 +67,7 @@ class ServicesController extends Controller
         if ($service) {
             return view('admin.service-edit', compact('service', 'categories'));
         } else {
-            return redirect()->route('service.index')->with('error', 'Service not found.');
+            return redirect()->route('service.index');
         }
     }
 
@@ -87,7 +87,7 @@ class ServicesController extends Controller
 
                 $validator = Validator::make($request->all(), $rules);
                 if ($validator->fails()) {
-                    return redirect()->back()->withErrors($validator->errors());
+                    return redirect()->back()->withErrors($validator)->withInput();
                 }
 
                 $service->service_category_id = $request->choose_category;
@@ -102,9 +102,8 @@ class ServicesController extends Controller
 
                 $service->priority = $request->priority;
                 $service->save();
-
-                // Redirect with a success message
-                return redirect()->route('service.index')->with('success', 'Service Updated successfully!');
+                session()->flash('message', ['type' => 'success', 'content' => 'Service updated successfully!']);
+                return redirect()->route('service.index');
             } catch (Exception $e) {
                 Log::info($e->getMessage());
                 return response()->json([$e->getMessage()], 500);
@@ -119,7 +118,8 @@ class ServicesController extends Controller
         $service = Service::find($id);
         if ($service) {
             $service->delete();
-            return redirect()->route('service.index')->with('success', 'Service deleted successfully.');
+            session()->flash('message', ['type' => 'success', 'content' => 'Service deleted successfully!']);
+            return redirect()->route('service.index');
         } else {
             return redirect()->route('service.index')->with('error', 'Service not found.');
         }

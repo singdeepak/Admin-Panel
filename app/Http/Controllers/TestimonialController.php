@@ -31,7 +31,7 @@ class TestimonialController extends Controller
 
         $validator = Validator::make($request->all(), $rules);
         if($validator->fails()){
-            return redirect()->back()->withErrors($validator->errors());
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         try{
@@ -51,8 +51,8 @@ class TestimonialController extends Controller
             $testimonial->priority = $request->input('priority');
             $testimonial->client_image = $imageName;
             $testimonial->save();
-
-            return redirect()->route('testimonial.index')->with('success', 'Testimonal created successfully.');
+            session()->flash('message', ['type' => 'success', 'content' => 'Testimonial created successfully!']);
+            return redirect()->route('testimonial.index');
         }catch(Exception $e){
             Log::info($e->getMessage());
             return response()->json([$e->getMessage()], 500);
@@ -81,7 +81,7 @@ class TestimonialController extends Controller
 
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator->errors());
+                return redirect()->back()->withErrors($validator)->withInput();
             }
 
             // Check if a new image file has been uploaded
@@ -90,7 +90,7 @@ class TestimonialController extends Controller
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images/testimonials'), $imageName);
             } else {
-                return redirect()->back()->with('error', 'Image file not found.');
+                return redirect()->back();
             }
 
             // Update other fields of testimonial
@@ -101,8 +101,8 @@ class TestimonialController extends Controller
             $testimonial->priority = $request->input('priority');
             $testimonial->client_image = $imageName;
             $testimonial->save();
-
-            return redirect()->route('testimonial.index')->with('success', 'Testimonial updated successfully.');
+            session()->flash('message', ['type' => 'success', 'content' => 'Testimonial updated successfully!']);
+            return redirect()->route('testimonial.index');
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return back()->withInput()->withErrors(['error' => 'Failed to update testimonial.']);
@@ -114,7 +114,8 @@ class TestimonialController extends Controller
     public function deleteTestimonial($id){
         $testimonial = Testimonial::find($id);
         if ($testimonial->delete()) {
-            return redirect()->route('$testimonial.index')->with('success', 'Testimonial deleted successfully..!');
+            session()->flash('message', ['type' => 'success', 'content' => 'Testimonial deleted successfully!']);
+            return redirect()->route('$testimonial.index');
         } else {
             return redirect()->back()->with('success', 'Testimonial can not be deleted..!');
         }

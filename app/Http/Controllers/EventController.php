@@ -36,7 +36,7 @@ class EventController extends Controller
             ];
             $validator = Validator::make($request->all(), $rules);
             if ($validator) {
-                return redirect()->back()->withErrors($validator->errors());
+                return redirect()->back()->withErrors($validator)->withInput();
             }
 
 
@@ -59,8 +59,8 @@ class EventController extends Controller
             $event->added_date = $request->input('added_date');
             $event->event_image = $imageName;
             $event->save();
-
-            return redirect()->route('event.index')->with('success', 'event created successfully.');
+            session()->flash('message', ['type' => 'success', 'content' => 'Event created successfully!']);
+            return redirect()->route('event.index');
         } catch (Exception $e) {
             Log::info($e->getMessage());
             return response()->json([$e->getMessage()], 500);
@@ -88,7 +88,7 @@ class EventController extends Controller
                 ];
                 $validator = Validator::make($request->all(),$rules);
                 if ($validator) {
-                    return redirect()->back()->withErrors($validator->errors());
+                    return redirect()->back()->withErrors($validator)->withInput();
                 }
 
 
@@ -110,8 +110,8 @@ class EventController extends Controller
                 $event->added_date = $request->input('added_date');
                 $event->event_image = $imageName;
                 $event->save();
-
-                return redirect()->route('event.index')->with('success', 'event updated successfully.');
+                session()->flash('message', ['type' => 'success', 'content' => 'Event updated successfully!']);
+                return redirect()->route('event.index');
             } catch (Exception $e) {
                 Log::info($e->getMessage());
                 return response()->json([$e->getMessage()], 500);
@@ -125,7 +125,8 @@ class EventController extends Controller
     {
         $event = Event::find($id);
         if ($event->delete()) {
-            return redirect()->route('event.index')->with('success', 'Event deleted successfully..!');
+            session()->flash('message', ['type' => 'success', 'content' => 'Event deleted successfully!']);
+            return redirect()->route('event.index');
         } else {
             return redirect()->back()->with('success', 'Event can not be deleted..!');
         }

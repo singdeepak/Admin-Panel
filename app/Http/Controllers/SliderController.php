@@ -29,7 +29,7 @@ class SliderController extends Controller
 
         $validator = Validator::make($request->all(), $rules);
         if($validator->fails()){
-            return redirect()->back()->withErrors($validator->errors());
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         try{
@@ -47,8 +47,8 @@ class SliderController extends Controller
             $slider->slider_link = $request->input('slider-link');
             $slider->slider_image = $imageName;
             $slider->save();
-
-            return redirect()->route('slider.index')->with('success', 'Slider created successfully.');
+            session()->flash('message', ['type' => 'success', 'content' => 'Slider created successfully!']);
+            return redirect()->route('slider.index');
        }catch(Exception $e){
         Log::info($e->getMessage());
         return response()->json([$e->getMessage()], 500);
@@ -72,7 +72,7 @@ class SliderController extends Controller
                 ];
                 $validator = Validator::make($request->all(), $rules);
                 if($validator->fails()){
-                    return redirect()->back()->withErrors($validator->errors());
+                    return redirect()->back()->withErrors($validator)->withInput();
                 }
 
                 // Handle the file upload
@@ -90,8 +90,8 @@ class SliderController extends Controller
                 $slider->slider_link = $request->input('slider-link');
                 $slider->slider_image = $imageName;
                 $slider->save();
-
-                return redirect()->route('slider.index')->with('success', 'Slider updated successfully.');
+                session()->flash('message', ['type' => 'success', 'content' => 'Slider updated successfully!']);
+                return redirect()->route('slider.index');
             } catch (Exception $e) {
                 Log::info($e->getMessage());
                 return response()->json([$e->getMessage()], 500);
@@ -105,7 +105,8 @@ class SliderController extends Controller
     public function deleteSlider($id){
         $slider = Slider::find($id);
         if($slider->delete()){
-            return redirect()->route('slider.index')->with('success', 'Slider deleted successfully..!');
+            session()->flash('message', ['type' => 'success', 'content' => 'Slider deleted successfully!']);
+            return redirect()->route('slider.index');
         }else{
             return redirect()->back()->with('success', 'Slider can not be deleted..!');
         }

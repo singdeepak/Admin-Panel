@@ -7,11 +7,19 @@
                 <a href="{{ route('news.create') }}" class="btn btn-primary float-right">Create News</a>
             </div>
             <div class="card-body">
+                @if (session('message'))
+                    <div id="session-alert" class="alert alert-{{ session('message.type') }}">
+                        {{ session('message.content') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 @if ($news->count() > 0)
                     <table class="table table-bordered">
                         <thead class="table-dark">
                             <tr>
-                                <th>Id</th>
+                                <th>#</th>
                                 <th>Image</th>
                                 <th>Title</th>
                                 <th>Description</th>
@@ -22,7 +30,7 @@
                         <tbody>
                             @foreach ($news as $news)
                                 <tr>
-                                    <td>{{ $news->id }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>
                                         <img src="{{ asset('images/news/' . $news->news_image) }}"
                                             alt="{{ $news->news_title }}" style="max-width: 70px; max-height: 70px;">

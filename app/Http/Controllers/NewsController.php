@@ -32,7 +32,7 @@ class NewsController extends Controller
             ];
             $validator = Validator::make($request->all(), $rules);
             if ($validator) {
-                return redirect()->back()->withErrors($validator->errors());
+                return redirect()->back()->withErrors($validator)->withInput();
             }
 
             if ($request->hasFile('news_image')) {
@@ -50,8 +50,8 @@ class NewsController extends Controller
             $news->priority = $request->input('priority');
             $news->news_image = $imageName;
             $news->save();
-
-            return redirect()->route('news.index')->with('success', 'News created successfully.');
+            session()->flash('message', ['type' => 'success', 'content' => 'News created successfully!']);
+            return redirect()->route('news.index');
         } catch (Exception $e) {
             Log::info($e->getMessage());
             return response()->json([$e->getMessage()], 500);
@@ -77,7 +77,7 @@ class NewsController extends Controller
                 ];
                 $validator = Validator::make($request->all(), $rules);
                 if ($validator) {
-                    return redirect()->back()->withErrors($validator->errors());
+                    return redirect()->back()->withErrors($validator)->withInput();
                 }
 
                 if ($request->hasFile('news_image')) {
@@ -85,7 +85,7 @@ class NewsController extends Controller
                     $imageName = time() . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path('images/news'), $imageName);
                 } else {
-                    return redirect()->back()->with('error', 'Image file not found.');
+                    return redirect()->back();
                 }
 
                 // Update a News
@@ -94,8 +94,8 @@ class NewsController extends Controller
                 $news->priority = $request->input('priority');
                 $news->news_image = $imageName;
                 $news->save();
-
-                return redirect()->route('news.index')->with('success', 'News updated successfully.');
+                session()->flash('message', ['type' => 'success', 'content' => 'News updated successfully!']);
+                return redirect()->route('news.index');
             } catch (Exception $e) {
                 Log::info($e->getMessage());
                 return response()->json([$e->getMessage()], 500);
@@ -109,7 +109,8 @@ class NewsController extends Controller
     {
         $news = News::find($id);
         if ($news->delete()) {
-            return redirect()->route('news.index')->with('success', 'News deleted successfully..!');
+            session()->flash('message', ['type' => 'success', 'content' => 'News deleted successfully!']);
+            return redirect()->route('news.index');
         } else {
             return redirect()->back()->with('success', 'News can not be deleted..!');
         }

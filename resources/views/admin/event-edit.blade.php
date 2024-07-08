@@ -46,17 +46,15 @@
                     </div>
                     <div class="form-group">
                         <label for="added_by">Added By</label>
-                        {{-- <select name="user" class="form-control">
-                            <option selected disabled>Choose User</option>
-                            @foreach ($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endforeach
-                        </select> --}}
                         <input type="text" name="added_by" placeholder="Enter adding person" id="added_by" class="form-control" value="{{ $event->added_by }}">
                     </div>
                     <div class="form-group">
                         <label for="added_date">Added Date</label>
                         <input type="date" class="form-control" id="added_date" name="added_date" value="{{ $event->added_date }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="event_location">Location Link</label>
+                        <input type="text" class="form-control-file" id="event_location" name="event_location" value="{{ $event_location }}">
                     </div>
                     <div class="form-group">
                         <label for="current-slider-image">Current Slider Image</label><br>

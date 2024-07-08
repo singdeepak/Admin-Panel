@@ -108,8 +108,7 @@ class BusinessController extends Controller
                     $image = $request->file('logo');
                     $imageName = time() . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path('images/logo'), $imageName);
-                } else {
-                    return redirect()->back()->with('error', 'Image file not found.');
+                    $business->logo = $imageName;
                 }
 
                 $business->business_name = $request->input('business_name');
@@ -122,7 +121,6 @@ class BusinessController extends Controller
                 $business->facebook = $request->input('facebook');
                 $business->youtube = $request->input('youtube');
                 $business->instagram = $request->input('instagram');
-                $business->logo = $imageName;
                 $business->save();
                 session()->flash('message', ['type' => 'success', 'content' => 'Business updated successfully!']);
                 return redirect()->route('business.index');
@@ -144,5 +142,15 @@ class BusinessController extends Controller
         } else {
             return redirect()->back()->with('success', 'business can not be deleted..!');
         }
+    }
+
+
+    public function contact(){
+        $business = Business::get()->toArray();
+        return view('contact', compact('business'));
+    }
+
+    public function about(){
+        return view('about');
     }
 }

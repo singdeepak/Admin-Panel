@@ -32,7 +32,7 @@
                         <tbody>
                             @foreach ($testimonials as $testimonial)
                                 <tr>
-                                    <tr>{{ $loop->iteraion }}</tr>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>
                                         <img src="{{ asset('images/testimonials/' . $testimonial->client_image) }}"
                                             alt="{{ $testimonial->client_name }}" style="max-width: 70px; max-height: 70px;">

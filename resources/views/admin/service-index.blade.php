@@ -37,7 +37,7 @@
                                         <img src="{{ asset('images/services/' . $service->service_image) }}"
                                             alt="{{ $service->service_image }}" style="max-width: 70px; max-height: 70px;">
                                     </td>
-                                    <td>{{ $service->category->category_name }}</td>
+                                    <td>{{ $service->category->category_name ?? 'No Category' }}</td>
                                     <td>{{ $service->service_title }}</td>
                                     <td>{{ $service->service_short_desc }}</td>
                                     <td>{{ $service->priority }}</td>

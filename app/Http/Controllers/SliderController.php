@@ -24,7 +24,7 @@ class SliderController extends Controller
             'slider-heading' => 'required|string|max:255',
             'slider-sub-heading' => 'required|string|max:255',
             'slider-link' => 'nullable|url|max:255',
-            'slider-image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'slider-image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5000',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -68,7 +68,7 @@ class SliderController extends Controller
                     'slider-heading' => 'required|string|max:255',
                     'slider-sub-heading' => 'required|string|max:255',
                     'slider-link' => 'nullable|url|max:255',
-                    'slider-image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                    'slider-image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000',
                 ];
                 $validator = Validator::make($request->all(), $rules);
                 if($validator->fails()){
@@ -80,15 +80,12 @@ class SliderController extends Controller
                     $image = $request->file('slider-image');
                     $imageName = time() . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path('images/sliders'), $imageName);
-                } else {
-                    return redirect()->back()->with('error', 'Image file not found.');
+                    $slider->slider_image = $imageName;
                 }
 
-                // Create a new slider
                 $slider->slider_heading = $request->input('slider-heading');
                 $slider->slider_sub_heading = $request->input('slider-sub-heading');
                 $slider->slider_link = $request->input('slider-link');
-                $slider->slider_image = $imageName;
                 $slider->save();
                 session()->flash('message', ['type' => 'success', 'content' => 'Slider updated successfully!']);
                 return redirect()->route('slider.index');

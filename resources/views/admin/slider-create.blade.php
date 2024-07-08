@@ -33,12 +33,12 @@
                     <div class="form-group">
                         <label for="slider-sub-heading">Slider Sub-Heading</label>
                         <input type="text" class="form-control" id="slider-sub-heading"
-                            placeholder="Enter slider sub-heading" name="slider-sub-heading" value="{{ old('slider-sub-heading')>
+                            placeholder="Enter slider sub-heading" name="slider-sub-heading" value="{{ old('slider-sub-heading') }}">
                     </div>
                     <div class="form-group">
                         <label for="slider-link">Slider Link</label>
                         <input type="text" class="form-control" id="slider-link" placeholder="Enter slider link"
-                            name="slider-link" value="{{ old('slider-link') }}>
+                            name="slider-link" value="{{ old('slider-link') }}">
                     </div>
                     <div class="form-group">
                         <label for="slider-image">Slider Image</label>

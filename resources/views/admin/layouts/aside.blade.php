@@ -1,7 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Sidebar -->
     <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img src="{{ asset('images/logo.png') }}" class="img-circle elevation-2" alt="User Image">
@@ -97,6 +96,18 @@
                         <i class="nav-icon far fa-calendar-alt"></i>
                         <p>
                             News
+                        </p>
+                    </a>
+                </li>
+
+
+                <!-- Pages -->
+                <li class="nav-item">
+                    <a href="{{ route('page.index') }}"
+                        class="nav-link {{ request()->is('pages') ? 'active' : '' }}">
+                        <i class="nav-icon far fa-calendar-alt"></i>
+                        <p>
+                            Pages
                         </p>
                     </a>
                 </li>

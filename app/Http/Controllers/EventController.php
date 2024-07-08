@@ -32,15 +32,14 @@ class EventController extends Controller
                 'event_long_desc' => 'required|string',
                 'event_date' => 'required|date',
                 'added_date' => 'required|date',
-                'event_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+                'event_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'event_location' => 'required|url_or_string'
             ];
             $validator = Validator::make($request->all(), $rules);
-            if ($validator) {
+            if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-
-            // Handle the file upload
             if ($request->hasFile('event_image')) {
                 $image = $request->file('event_image');
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
@@ -49,7 +48,6 @@ class EventController extends Controller
                 return redirect()->back()->with('error', 'Image file not found.');
             }
 
-            // Create a new event
             $event = new Event();
             $event->event_title = $request->input('event_title');
             $event->event_short_desc = $request->input('event_short_desc');
@@ -57,6 +55,7 @@ class EventController extends Controller
             $event->event_date = $request->input('event_date');
             $event->added_by = $request->input('added_by');
             $event->added_date = $request->input('added_date');
+            $event->event_location = $request->input('event_location');
             $event->event_image = $imageName;
             $event->save();
             session()->flash('message', ['type' => 'success', 'content' => 'Event created successfully!']);
@@ -84,31 +83,28 @@ class EventController extends Controller
                     'event_long_desc' => 'required|string',
                     'event_date' => 'required|date',
                     'added_date' => 'required|date',
-                    'event_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+                    'event_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                    'event_location' => 'required|url_or_string'
                 ];
                 $validator = Validator::make($request->all(),$rules);
-                if ($validator) {
+                if ($validator->fails()) {
                     return redirect()->back()->withErrors($validator)->withInput();
                 }
 
-
-                // Handle the file upload
                 if ($request->hasFile('event_image')) {
                     $image = $request->file('event_image');
                     $imageName = time() . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path('images/events'), $imageName);
-                } else {
-                    return redirect()->back()->with('error', 'Image file not found.');
+                    $event->event_image = $imageName;
                 }
 
-                // Create a new event
                 $event->event_title = $request->input('event_title');
                 $event->event_short_desc = $request->input('event_short_desc');
                 $event->event_long_desc = $request->input('event_long_desc');
                 $event->event_date = $request->input('event_date');
                 $event->added_by = $request->input('added_by');
                 $event->added_date = $request->input('added_date');
-                $event->event_image = $imageName;
+                $event->event_location = $request->input('event_location');
                 $event->save();
                 session()->flash('message', ['type' => 'success', 'content' => 'Event updated successfully!']);
                 return redirect()->route('event.index');
@@ -130,5 +126,14 @@ class EventController extends Controller
         } else {
             return redirect()->back()->with('success', 'Event can not be deleted..!');
         }
+    }
+
+    public function eventDetails($id){
+        $event = Event::find($id)->toArray();
+        return view('event-details', compact('event'));
+    }
+
+    public function eventPage(){
+        return view('event');
     }
 }

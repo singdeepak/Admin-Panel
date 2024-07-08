@@ -55,6 +55,10 @@
                         <label for="event_image">Event Image</label>
                         <input type="file" class="form-control-file" id="event_image" name="event_image">
                     </div>
+                    <div class="form-group">
+                        <label for="event_location">Location Link</label>
+                        <input type="text" class="form-control-file" id="event_location" name="event_location">
+                    </div>
                     <button type="submit" class="btn btn-primary">Create</button>
                 </form>
             </div>

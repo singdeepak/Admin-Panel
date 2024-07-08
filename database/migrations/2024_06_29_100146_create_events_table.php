@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('event_image')->nullable();
             $table->string('added_by')->nullable();
             $table->string('added_date')->nullable();
+            $table->string('event_location')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

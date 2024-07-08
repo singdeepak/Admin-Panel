@@ -10,6 +10,7 @@ use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ServiceCategoryController;
 
 Route::get('admin', function () {
@@ -96,5 +97,14 @@ Route::post('news/create', [NewsController::class, 'storeNews'])->name('news.sto
 Route::get('news/edit/{id}', [NewsController::class, 'editNews'])->name('news.edit');
 Route::put('news/update/{id}', [NewsController::class, 'updateNews'])->name('news.update');
 Route::delete('news/delete/{id}', [NewsController::class, 'deleteNews'])->name('news.delete');
+
+
+// Pages Routes
+Route::get('pages', [PageController::class, 'pageIndex'])->name('page.index');
+Route::get('page', [PageController::class, 'createPage'])->name('page.create');
+Route::post('page/create', [PageController::class, 'storePage'])->name('page.store');
+Route::get('page/edit/{id}', [PageController::class, 'editPage'])->name('page.edit');
+Route::put('page/update/{id}', [PageController::class, 'updatePage'])->name('page.update');
+Route::delete('page/delete/{id}', [PageController::class, 'deletePage'])->name('page.delete');
 
 

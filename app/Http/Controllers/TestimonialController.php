@@ -89,8 +89,7 @@ class TestimonialController extends Controller
                 $image = $request->file('client_image');
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images/testimonials'), $imageName);
-            } else {
-                return redirect()->back();
+                $testimonial->logo = $imageName;
             }
 
             // Update other fields of testimonial
@@ -99,7 +98,6 @@ class TestimonialController extends Controller
             $testimonial->client_designation = $request->input('client_designation');
             $testimonial->added_date = $request->input('added_date');
             $testimonial->priority = $request->input('priority');
-            $testimonial->client_image = $imageName;
             $testimonial->save();
             session()->flash('message', ['type' => 'success', 'content' => 'Testimonial updated successfully!']);
             return redirect()->route('testimonial.index');

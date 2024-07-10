@@ -1,5 +1,6 @@
 @php
     $data = \App\Models\Business::get()->toArray();
+    $currentRoute = Route::currentRouteName();
 @endphp
 
 <!DOCTYPE html>
@@ -93,29 +94,29 @@
 							<div class="main-menu-two-wrapper__main-menu">
 								<a href="#" class="mobile-nav__toggler"><i class="fa fa-bars"></i></a>
 								<ul class="main-menu__list one-page-scroll-menu">
-									<li class="current" data-scroll-offset="0">
+									<li class="{{ $currentRoute == 'home' ? 'current' : '' }}" data-scroll-offset="0">
 										<a href="/">Home</a>
 									</li>
-									<li class="current" data-scroll-offset="60">
+									<li class="{{ $currentRoute == 'about' ? 'current' : '' }}" data-scroll-offset="60">
 										<a href="{{ route('about') }}">About Us</a>
 									</li>
 
-									<li class="dropdown current">
+									<li class="dropdown">
 										<a href="javascirpt:void(0);">Our Activities</a>
 										<ul>
-											<li><a href="{{ route('social-page', 1) }}">Social Activities</a></li>
-											<li><a href="{{ route('educational-page', 2) }}">Educational Activities</a></li>
-											<li><a href="{{ route('arts-page', 3) }}">Arts and Sports Activities</a></li>
-											<li><a href="{{ route('other-page', 4) }}">Other Activities</a></li>
+											<li class="{{ $currentRoute == 'social-page' ? 'current' : '' }}"><a href="{{ route('social-page', 1) }}">Social Activities</a></li>
+											<li class="{{ $currentRoute == 'educational-page' ? 'current' : '' }}"><a href="{{ route('educational-page', 2) }}">Educational Activities</a></li>
+											<li class="{{ $currentRoute == 'arts-page' ? 'current' : '' }}"><a href="{{ route('arts-page', 3) }}">Arts and Sports Activities</a></li>
+											<li class="{{ $currentRoute == 'other-page' ? 'current' : '' }}"><a href="{{ route('other-page', 4) }}">Other Activities</a></li>
 										</ul>
 									</li>
-									<li class="current" data-scroll-offset="60">
+									<li class="{{ $currentRoute == 'events' ? 'current' : '' }}" data-scroll-offset="60">
 										<a href="{{ route('events') }}">Upcoming Events</a>
 									</li>
-									<li class="current" data-scroll-offset="60">
+									<li class="{{ $currentRoute == 'news' ? 'current' : '' }}" data-scroll-offset="60">
 										<a href="{{ route('news') }}">Newsroom</a>
 									</li>
-									<li class="current" data-scroll-offset="60">
+									<li class="{{ $currentRoute == 'contact' ? 'current' : '' }}" data-scroll-offset="60">
 										<a href="{{ route('contact') }}">Contact</a>
 									</li>
 								</ul>

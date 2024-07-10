@@ -34,24 +34,6 @@
                                 <h2 class="section-title__title">{{ $arts->page_title }}</h2>
                             </div>
                             <p class="about-page__text">{!! $arts->page_desc !!}</p>
-                            <ul class="about-one__points list-unstyled">
-                                <li>
-                                    <div class="icon">
-                                        <span class="icon-confirmation"></span>
-                                    </div>
-                                    <div class="text">
-                                        <p>Join our Team</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="icon">
-                                        <span class="icon-confirmation"></span>
-                                    </div>
-                                    <div class="text">
-                                        <p>Quick Fundraising</p>
-                                    </div>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>

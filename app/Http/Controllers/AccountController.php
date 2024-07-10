@@ -11,8 +11,4 @@ class AccountController extends Controller
         $user = User::find($id);
         return view('admin.user-edit', compact('user'));
     }
-
-    public function updateAccount(Request $request){
-
-    }
 }

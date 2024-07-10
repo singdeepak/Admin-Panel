@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\UserEmail;
 use Exception;
 use App\Models\Business;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class BusinessController extends Controller
@@ -153,4 +155,24 @@ class BusinessController extends Controller
     public function about(){
         return view('about');
     }
+
+
+    public function sendEmail(Request $request){
+        $toEmail = 'immrdeepaksingh@gmail.com';
+        $subject = $request->subject;
+        $name = $request->name;
+        $email = $request->email;
+        $phone = $request->phone;
+        $message = $request->message;
+
+        try {
+            Mail::to($toEmail)->send(new UserEmail($subject, $name, $email, $phone, $message));
+            session()->flash('message', ['type' => 'success', 'content' => 'Email has been sent successfully..!']);
+        } catch (\Exception $e) {
+            session()->flash('message', ['type' => 'error', 'content' => 'Failed to send email. Please try again later.']);
+        }
+
+        return redirect()->back();
+    }
+
 }

@@ -53,7 +53,7 @@
 		<!--Main Slider Two End-->
 
 		<!--Feature Two Start-->
-		<section class="feature-two mt-5">
+		<section class="feature-two" style="padding: 5rem 0;">
 			<div class="container">
 				<div class="feature-two__inner">
 					<div class="row">
@@ -61,11 +61,11 @@
 							<!--Feature Two Single-->
 							<div class="feature-two__single wow fadeInUp" data-wow-delay="100ms">
 								<div class="feature-two__img">
-									<img src="{{ asset('images/service-bg.png') }}" alt="">
+									<img src="{{ asset('images/service-bg.png') }}">
 									<div class="feature-two__content">
 										<h3 class="feature-two__title"><a href="{{ route('social-page', 1) }}">Our <br> Social <br>
 											Activity</a></h3>
-										<a href="about.html" class="feature-two__arrow"><span
+										<a href="{{ route('social-page', 1) }}" class="feature-two__arrow"><span
 												class="icon-right-arrow"></span></a>
 									</div>
 								</div>
@@ -79,7 +79,7 @@
 									<div class="feature-two__content">
 										<h3 class="feature-two__title"><a href="{{ route('educational-page', 2) }}">Our <br> Educational <br>
 											Activity</a></h3>
-										<a href="become-volunteer.html" class="feature-two__arrow"><span class="icon-right-arrow"></span></a>
+										<a href="{{ route('educational-page', 2) }}" class="feature-two__arrow"><span class="icon-right-arrow"></span></a>
 									</div>
 								</div>
 							</div>
@@ -88,12 +88,12 @@
 							<!--Feature Two Single-->
 							<div class="feature-two__single wow fadeInUp" data-wow-delay="300ms">
 								<div class="feature-two__img feature-two__img-3">
-									<img src="{{ asset('images/service-bg.png') }}" alt="">
+									<img src="{{ asset('images/service-bg.png') }}">
 									<div class="feature-two__content">
 										<h3 class="feature-two__title"><a href="{{ route('arts-page', 3) }}">Our <br> Arts and Sports <br>
-											Activity</a></h3>
-										<a href="about.html" class="feature-two__arrow"><span
-												class="icon-right-arrow"></span></a>
+										Activity</a></h3>
+										<a href="{{ route('arts-page', 3) }}" class="feature-two__arrow"><span
+										class="icon-right-arrow"></span></a>
 									</div>
 								</div>
 							</div>
@@ -106,8 +106,8 @@
 									<div class="feature-two__content">
 										<h3 class="feature-two__title"><a href="{{ route('other-page', 4) }}">Our <br> others <br>
 											Activity</a></h3>
-										<a href="about.html" class="feature-two__arrow"><span
-												class="icon-right-arrow"></span></a>
+										<a href="{{ route('other-page', 4) }}" class="feature-two__arrow"><span
+										class="icon-right-arrow"></span></a>
 									</div>
 								</div>
 							</div>
@@ -180,7 +180,7 @@
 
 
 		<!--Cause Two End-->
-		<section class="causes-one causes-two" id="causes">
+		<section class="causes-one causes-two" id="causes" style="margin: 10rem 0;">
 			<div class="container">
 				<div class="section-title text-left">
 					<h2 class="section-title__title">Upcoming Events</h2>

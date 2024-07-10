@@ -29,7 +29,7 @@
                         <!--Events Single-->
                         <div class="events__single">
                             <div class="events__img">
-                                <img src="assets/images/resources/events-img-1.jpg">
+                                <img src="{{ asset('images/about-us.png') }}">
                                 <div class="events__date">
                                     <p>{{ $event->added_date }}</p>
                                 </div>

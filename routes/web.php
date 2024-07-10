@@ -23,4 +23,7 @@ Route::get('educational/page/details/{id}', [PageController::class, 'educational
 Route::get('arts/page/details/{id}', [PageController::class, 'artsActivity'])->name('arts-page');
 Route::get('other/page/details/{id}', [PageController::class, 'otherActivity'])->name('other-page');
 
+// Mail Route
+Route::post('sendmail', [BusinessController::class, 'sendEmail'])->name('sendmail');
+
 require __DIR__.'/admin.php';
